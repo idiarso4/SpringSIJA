@@ -1,27 +1,59 @@
 package com.school.academic.dto;
 
+import com.school.academic.entity.AttendanceStatus;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.time.LocalDate;
-
-@Getter
-@Setter
 public class AttendanceDTO {
     private Long id;
-
-    @NotNull(message = "Student ID is required")
-    private Long studentId;
-
-    @NotNull(message = "Teaching Activity ID is required")
+    
+    @NotNull
     private Long teachingActivityId;
-
-    @NotNull(message = "Date is required")
-    private LocalDate date;
-
-    @NotNull(message = "Status is required")
-    private String status;
-
+    
+    @NotNull
+    private Long studentId;
+    
+    @NotNull
+    private AttendanceStatus status;
+    
     private String notes;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getTeachingActivityId() {
+        return teachingActivityId;
+    }
+
+    public void setTeachingActivityId(Long teachingActivityId) {
+        this.teachingActivityId = teachingActivityId;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public AttendanceStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AttendanceStatus status) {
+        this.status = status;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }

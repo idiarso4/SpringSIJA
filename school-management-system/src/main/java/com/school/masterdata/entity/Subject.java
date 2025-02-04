@@ -1,33 +1,52 @@
 package com.school.masterdata.entity;
 
 import com.school.common.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "subjects")
 public class Subject extends BaseEntity {
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "subject_code", unique = true, nullable = false)
+    private String subjectCode;
 
-    @Column(nullable = false)
-    private String code;
+    @Column(name = "subject_name", nullable = false)
+    private String subjectName;
 
-    @Column(nullable = false)
-    private Integer grade;
-
-    @Column(name = "theory_hours")
-    private Integer theoryHours;
-
-    @Column(name = "practice_hours")
-    private Integer practiceHours;
-
-    @Column(length = 500)
     private String description;
+
+    @Column(name = "credit_hours")
+    private Integer creditHours;
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getCreditHours() {
+        return creditHours;
+    }
+
+    public void setCreditHours(Integer creditHours) {
+        this.creditHours = creditHours;
+    }
 }

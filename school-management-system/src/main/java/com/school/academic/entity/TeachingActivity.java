@@ -1,25 +1,17 @@
 package com.school.academic.entity;
 
+import com.school.common.entity.BaseEntity;
 import com.school.masterdata.entity.ClassRoom;
 import com.school.masterdata.entity.Subject;
 import com.school.masterdata.entity.Teacher;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "teaching_activities")
-@Getter
-@Setter
-@NoArgsConstructor
-public class TeachingActivity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TeachingActivity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
@@ -33,129 +25,126 @@ public class TeachingActivity {
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    @Column(nullable = false)
-    private LocalDate date;
-
-    @Column(name = "start_period", nullable = false)
-    private Integer startPeriod;
-
-    @Column(name = "end_period", nullable = false)
-    private Integer endPeriod;
+    @Column(name = "topic", nullable = false)
+    private String topic;
 
     @Column(name = "start_time", nullable = false)
-    private LocalTime startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "end_time", nullable = false)
-    private LocalTime endTime;
+    private LocalDateTime endTime;
 
-    @Column(name = "learning_materials", length = 500)
-    private String learningMaterials;
-
-    @Column(name = "teaching_media", length = 50)
-    private String teachingMedia;
-
-    @Column(name = "notes", length = 500)
     private String notes;
 
-    private boolean deleted = false;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
+    @Column(name = "start_period")
+    private Integer startPeriod;
+
+    @Column(name = "end_period")
+    private Integer endPeriod;
+
+    @ElementCollection
+    @CollectionTable(name = "teaching_activity_materials", joinColumns = @JoinColumn(name = "teaching_activity_id"))
+    @Column(name = "material")
+    private List<String> learningMaterials;
+
+    @Override
     public Long getId() {
-        return id;
+        return super.getId();
+    }
+
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
     }
 
     public Teacher getTeacher() {
         return teacher;
     }
 
-    public ClassRoom getClassRoom() {
-        return classRoom;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public Integer getStartPeriod() {
-        return startPeriod;
-    }
-
-    public Integer getEndPeriod() {
-        return endPeriod;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public String getLearningMaterials() {
-        return learningMaterials;
-    }
-
-    public String getTeachingMedia() {
-        return teachingMedia;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public ClassRoom getClassRoom() {
+        return classRoom;
     }
 
     public void setClassRoom(ClassRoom classRoom) {
         this.classRoom = classRoom;
     }
 
+    public Subject getSubject() {
+        return subject;
+    }
+
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setStartPeriod(Integer startPeriod) {
-        this.startPeriod = startPeriod;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
-    public void setEndPeriod(Integer endPeriod) {
-        this.endPeriod = endPeriod;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
-    public void setLearningMaterials(String learningMaterials) {
-        this.learningMaterials = learningMaterials;
-    }
-
-    public void setTeachingMedia(String teachingMedia) {
-        this.teachingMedia = teachingMedia;
+    public String getNotes() {
+        return notes;
     }
 
     public void setNotes(String notes) {
         this.notes = notes;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Integer getStartPeriod() {
+        return startPeriod;
+    }
+
+    public void setStartPeriod(Integer startPeriod) {
+        this.startPeriod = startPeriod;
+    }
+
+    public Integer getEndPeriod() {
+        return endPeriod;
+    }
+
+    public void setEndPeriod(Integer endPeriod) {
+        this.endPeriod = endPeriod;
+    }
+
+    public List<String> getLearningMaterials() {
+        return learningMaterials;
+    }
+
+    public void setLearningMaterials(List<String> learningMaterials) {
+        this.learningMaterials = learningMaterials;
     }
 }

@@ -2,6 +2,7 @@ package com.school.academic.service.impl;
 
 import com.school.academic.dto.AttendanceDTO;
 import com.school.academic.entity.Attendance;
+import com.school.academic.entity.AttendanceStatus;
 import com.school.academic.entity.TeachingActivity;
 import com.school.academic.repository.AttendanceRepository;
 import com.school.academic.repository.TeachingActivityRepository;
@@ -35,7 +36,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         Attendance attendance = new Attendance();
         attendance.setTeachingActivity(teachingActivity);
         attendance.setStudent(student);
-        attendance.setStatus(dto.getStatus());
+        attendance.setStatus(AttendanceStatus.valueOf(dto.getStatus()));
         attendance.setNotes(dto.getNotes());
 
         attendance = attendanceRepository.save(attendance);
@@ -69,7 +70,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
         attendance.setTeachingActivity(teachingActivity);
         attendance.setStudent(student);
-        attendance.setStatus(dto.getStatus());
+        attendance.setStatus(AttendanceStatus.valueOf(dto.getStatus()));
         attendance.setNotes(dto.getNotes());
 
         attendance = attendanceRepository.save(attendance);
@@ -88,7 +89,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         dto.setId(attendance.getId());
         dto.setTeachingActivityId(attendance.getTeachingActivity().getId());
         dto.setStudentId(attendance.getStudent().getId());
-        dto.setStatus(attendance.getStatus());
+        dto.setStatus(attendance.getStatus().toString());
         dto.setNotes(attendance.getNotes());
         return dto;
     }
@@ -106,6 +107,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Long getMonthlyAbsenceCount(Long studentId, int month, int year) {
-        return attendanceRepository.countMonthlyAbsencesByStudent(studentId, month, year);
+        return attendanceRepository.countMonthlyAbsencesByStudent(studentId, AttendanceStatus.ABSENT, month, year);
     }
 }

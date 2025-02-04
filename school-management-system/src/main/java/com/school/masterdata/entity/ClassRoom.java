@@ -5,28 +5,74 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "class_rooms")
 public class ClassRoom extends BaseEntity {
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "class_code", unique = true, nullable = false)
+    private String classCode;
 
-    @Column(nullable = false)
-    private Integer grade;
+    @Column(name = "class_name", nullable = false)
+    private String className;
 
-    @ManyToOne
+    @Column(name = "grade_level")
+    private Integer gradeLevel;
+
+    @Column(name = "academic_year")
+    private String academicYear;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "homeroom_teacher_id")
     private Teacher homeroomTeacher;
 
-    @Column(name = "academic_year", nullable = false)
-    private String academicYear;
-
-    @Column(nullable = false)
+    @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
-    @Column(length = 500)
-    private String description;
+    public String getClassCode() {
+        return classCode;
+    }
+
+    public void setClassCode(String classCode) {
+        this.classCode = classCode;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public Integer getGradeLevel() {
+        return gradeLevel;
+    }
+
+    public void setGradeLevel(Integer gradeLevel) {
+        this.gradeLevel = gradeLevel;
+    }
+
+    public String getAcademicYear() {
+        return academicYear;
+    }
+
+    public void setAcademicYear(String academicYear) {
+        this.academicYear = academicYear;
+    }
+
+    public Teacher getHomeroomTeacher() {
+        return homeroomTeacher;
+    }
+
+    public void setHomeroomTeacher(Teacher homeroomTeacher) {
+        this.homeroomTeacher = homeroomTeacher;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
 }

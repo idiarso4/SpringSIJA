@@ -1,5 +1,6 @@
 package com.school.security.dto;
 
+import com.school.security.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,9 +28,8 @@ public class RegisterRequest {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Role is required")
-    @Pattern(regexp = "^ROLE_(STUDENT|TEACHER)$", message = "Role must be either ROLE_STUDENT or ROLE_TEACHER")
-    private String role;
+    @NotNull(message = "Role is required")
+    private Role role;
 
     @NotBlank(message = "Identification number is required")
     private String identificationNumber;

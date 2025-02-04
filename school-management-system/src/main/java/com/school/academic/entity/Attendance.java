@@ -1,5 +1,6 @@
 package com.school.academic.entity;
 
+import com.school.common.entity.BaseEntity;
 import com.school.masterdata.entity.Student;
 import com.school.masterdata.entity.TeachingActivity;
 import jakarta.persistence.*;
@@ -8,12 +9,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "attendances")
-@Getter
-@Setter
-public class Attendance {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Attendance extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teaching_activity_id", nullable = false)
@@ -23,9 +19,46 @@ public class Attendance {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private AttendanceStatus status;
 
-    @Column(length = 255)
     private String notes;
+
+    public TeachingActivity getTeachingActivity() {
+        return teachingActivity;
+    }
+
+    public void setTeachingActivity(TeachingActivity teachingActivity) {
+        this.teachingActivity = teachingActivity;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public AttendanceStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AttendanceStatus status) {
+        this.status = status;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
 }

@@ -1,6 +1,8 @@
 package com.school.academic.repository;
 
 import com.school.academic.entity.Attendance;
+import com.school.academic.entity.AttendanceStatus;
+import com.school.academic.entity.TeachingActivity;
 import com.school.masterdata.entity.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,11 +35,11 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
     
     @Query("SELECT COUNT(a) FROM Attendance a " +
            "WHERE a.student.id = :studentId " +
-           "AND a.status = 'ABSENT' " +
+           "AND a.status = :status " +
            "AND EXTRACT(MONTH FROM a.teachingActivity.date) = :month " +
            "AND EXTRACT(YEAR FROM a.teachingActivity.date) = :year " +
            "AND a.deleted = false")
-    Long countMonthlyAbsencesByStudent(Long studentId, int month, int year);
+    Long countMonthlyAbsencesByStudent(Long studentId, AttendanceStatus status, int month, int year);
     
     List<Attendance> findByTeachingActivityAndTeachingActivity_DateBetween(TeachingActivity teachingActivity, LocalDate startDate, LocalDate endDate);
 }

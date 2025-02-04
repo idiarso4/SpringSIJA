@@ -1,38 +1,41 @@
 package com.school.academic.dto;
 
 import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class TeachingActivityDTO {
+
     private Long id;
 
-    @NotNull(message = "Teacher ID is required")
+    @NotNull
     private Long teacherId;
 
-    @NotNull(message = "Class Room ID is required")
+    @NotNull
     private Long classRoomId;
 
-    @NotNull(message = "Subject ID is required")
+    @NotNull
     private Long subjectId;
 
-    @NotNull(message = "Date is required")
+    @NotNull
+    private String topic;
+
+    @NotNull
+    private LocalDateTime startTime;
+
+    @NotNull
+    private LocalDateTime endTime;
+
+    private String notes;
+    
     private LocalDate date;
-
-    @NotNull(message = "Start Period is required")
+    
     private Integer startPeriod;
-
-    @NotNull(message = "End Period is required")
+    
     private Integer endPeriod;
-
-    @NotNull(message = "Start Time is required")
-    private LocalTime startTime;
-
-    @NotNull(message = "End Time is required")
-    private LocalTime endTime;
-
-    private String learningMaterials;
+    
+    private List<String> learningMaterials;
 
     public Long getId() {
         return id;
@@ -66,6 +69,38 @@ public class TeachingActivityDTO {
         this.subjectId = subjectId;
     }
 
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public LocalDate getDate() {
         return date;
     }
@@ -90,27 +125,11 @@ public class TeachingActivityDTO {
         this.endPeriod = endPeriod;
     }
 
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getLearningMaterials() {
+    public List<String> getLearningMaterials() {
         return learningMaterials;
     }
 
-    public void setLearningMaterials(String learningMaterials) {
+    public void setLearningMaterials(List<String> learningMaterials) {
         this.learningMaterials = learningMaterials;
     }
 }

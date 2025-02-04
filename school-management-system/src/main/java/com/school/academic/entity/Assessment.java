@@ -4,15 +4,10 @@ import com.school.common.entity.BaseEntity;
 import com.school.masterdata.entity.Student;
 import com.school.masterdata.entity.Subject;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "assessments")
-@Getter
-@Setter
 public class Assessment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,26 +18,63 @@ public class Assessment extends BaseEntity {
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "assessment_type", nullable = false)
     private AssessmentType assessmentType;
 
-    @Column(name = "attempt", nullable = false)
-    private Integer attempt;
-
-    @Column(name = "score", nullable = false)
+    @Column(nullable = false)
     private Double score;
 
-    @Column(name = "notes", length = 500)
+    @Column(nullable = false)
+    private LocalDate date;
+
     private String notes;
 
-    public enum AssessmentType {
-        DAILY_TEST,
-        MID_TERM,
-        FINAL_TERM,
-        PRACTICAL_TEST
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public AssessmentType getAssessmentType() {
+        return assessmentType;
+    }
+
+    public void setAssessmentType(AssessmentType assessmentType) {
+        this.assessmentType = assessmentType;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

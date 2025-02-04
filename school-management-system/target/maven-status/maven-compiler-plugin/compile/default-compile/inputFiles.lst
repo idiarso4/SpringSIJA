@@ -7,6 +7,7 @@ C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\repository\StudentPermissionRepository.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\common\service\NotificationService.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\config\OpenApiConfig.java
+C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\dto\StudentPermissionDTO.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\validator\PasswordValidator.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\common\exception\ErrorResponse.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\dto\RegisterRequest.java
@@ -14,6 +15,7 @@ C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\dto\LoginRequest.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\controller\StudentPermissionController.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\entity\Assessment.java
+C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\common\exception\EntityNotFoundException.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\masterdata\entity\Student.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\service\AttendanceService.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\controller\PasswordResetController.java
@@ -51,6 +53,8 @@ C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\masterdata\repository\ClassRoomRepository.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\service\PasswordResetService.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\service\impl\AssessmentServiceImpl.java
+C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\masterdata\entity\Role.java
+C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\entity\Role.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\annotation\CurrentUser.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\controller\AssessmentController.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\service\impl\AttendanceServiceImpl.java
@@ -60,4 +64,5 @@ C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\masterdata\entity\Teacher.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\SchoolManagementApplication.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\config\SecurityConfig.java
+C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\entity\AssessmentType.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\service\EmailService.java
