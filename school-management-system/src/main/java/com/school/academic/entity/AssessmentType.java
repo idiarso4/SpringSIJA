@@ -7,6 +7,5 @@ public enum AssessmentType {
     FINAL_EXAM,
     PROJECT,
     PRESENTATION,
-    PRACTICAL_TEST,
-    OTHER
+    PARTICIPATION
 }

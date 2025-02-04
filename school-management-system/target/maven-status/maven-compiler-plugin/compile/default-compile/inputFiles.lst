@@ -20,6 +20,7 @@ C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\service\AttendanceService.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\controller\PasswordResetController.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\dto\PasswordResetRequest.java
+C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\academic\entity\AttendanceStatus.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\masterdata\repository\SubjectRepository.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\common\exception\ValidationErrorResponse.java
 C:\Users\MAS GURU SIJA\Desktop\MATERI\Projects\school-management-system\src\main\java\com\school\security\controller\AuthController.java

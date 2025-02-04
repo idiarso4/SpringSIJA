@@ -4,129 +4,114 @@ import com.school.academic.dto.TeachingActivityDTO;
 import com.school.academic.entity.TeachingActivity;
 import com.school.academic.repository.TeachingActivityRepository;
 import com.school.academic.service.TeachingActivityService;
-import com.school.common.exception.ResourceNotFoundException;
 import com.school.masterdata.entity.ClassRoom;
-import com.school.masterdata.entity.Subject;
 import com.school.masterdata.entity.Teacher;
 import com.school.masterdata.repository.ClassRoomRepository;
-import com.school.masterdata.repository.SubjectRepository;
 import com.school.masterdata.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TeachingActivityServiceImpl implements TeachingActivityService {
-
     private final TeachingActivityRepository teachingActivityRepository;
     private final TeacherRepository teacherRepository;
     private final ClassRoomRepository classRoomRepository;
-    private final SubjectRepository subjectRepository;
 
     @Override
-    public TeachingActivityDTO createTeachingActivity(TeachingActivityDTO dto) {
-        Teacher teacher = teacherRepository.findById(dto.getTeacherId())
-                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found"));
+    @Transactional
+    public TeachingActivity createActivity(TeachingActivityDTO activityDTO) {
+        Teacher teacher = teacherRepository.findById(activityDTO.getTeacherId())
+                .orElseThrow(() -> new IllegalArgumentException("Teacher not found"));
 
-        ClassRoom classRoom = classRoomRepository.findById(dto.getClassRoomId())
-                .orElseThrow(() -> new ResourceNotFoundException("ClassRoom not found"));
-
-        Subject subject = subjectRepository.findById(dto.getSubjectId())
-                .orElseThrow(() -> new ResourceNotFoundException("Subject not found"));
+        ClassRoom classRoom = classRoomRepository.findById(activityDTO.getClassRoomId())
+                .orElseThrow(() -> new IllegalArgumentException("Class room not found"));
 
         TeachingActivity activity = new TeachingActivity();
         activity.setTeacher(teacher);
         activity.setClassRoom(classRoom);
-        activity.setSubject(subject);
-        activity.setDate(dto.getDate());
-        activity.setStartPeriod(dto.getStartPeriod());
-        activity.setEndPeriod(dto.getEndPeriod());
-        activity.setStartTime(dto.getStartTime());
-        activity.setEndTime(dto.getEndTime());
-        activity.setLearningMaterials(dto.getLearningMaterials());
+        activity.setStartTime(activityDTO.getStartTime());
+        activity.setEndTime(activityDTO.getEndTime());
+        activity.setSubject(activityDTO.getSubject());
+        activity.setDescription(activityDTO.getDescription());
+        activity.setCompleted(false);
 
-        activity = teachingActivityRepository.save(activity);
-        return mapToDTO(activity);
+        return teachingActivityRepository.save(activity);
     }
 
     @Override
-    public TeachingActivityDTO getTeachingActivity(Long id) {
-        TeachingActivity activity = teachingActivityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Teaching Activity not found"));
-        return mapToDTO(activity);
+    @Transactional
+    public TeachingActivity updateActivity(Long id, TeachingActivityDTO activityDTO) {
+        TeachingActivity activity = getActivityById(id);
+
+        if (activityDTO.getTeacherId() != null) {
+            Teacher teacher = teacherRepository.findById(activityDTO.getTeacherId())
+                    .orElseThrow(() -> new IllegalArgumentException("Teacher not found"));
+            activity.setTeacher(teacher);
+        }
+
+        if (activityDTO.getClassRoomId() != null) {
+            ClassRoom classRoom = classRoomRepository.findById(activityDTO.getClassRoomId())
+                    .orElseThrow(() -> new IllegalArgumentException("Class room not found"));
+            activity.setClassRoom(classRoom);
+        }
+
+        if (activityDTO.getStartTime() != null) {
+            activity.setStartTime(activityDTO.getStartTime());
+        }
+
+        if (activityDTO.getEndTime() != null) {
+            activity.setEndTime(activityDTO.getEndTime());
+        }
+
+        if (activityDTO.getSubject() != null) {
+            activity.setSubject(activityDTO.getSubject());
+        }
+
+        if (activityDTO.getDescription() != null) {
+            activity.setDescription(activityDTO.getDescription());
+        }
+
+        return teachingActivityRepository.save(activity);
     }
 
     @Override
-    public List<TeachingActivityDTO> getAllTeachingActivities() {
-        return teachingActivityRepository.findAll().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    @Transactional
+    public void deleteActivity(Long id) {
+        if (!teachingActivityRepository.existsById(id)) {
+            throw new IllegalArgumentException("Teaching activity not found");
+        }
+        teachingActivityRepository.deleteById(id);
     }
 
     @Override
-    public TeachingActivityDTO updateTeachingActivity(Long id, TeachingActivityDTO dto) {
-        TeachingActivity activity = teachingActivityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Teaching Activity not found"));
-
-        Teacher teacher = teacherRepository.findById(dto.getTeacherId())
-                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found"));
-
-        ClassRoom classRoom = classRoomRepository.findById(dto.getClassRoomId())
-                .orElseThrow(() -> new ResourceNotFoundException("ClassRoom not found"));
-
-        Subject subject = subjectRepository.findById(dto.getSubjectId())
-                .orElseThrow(() -> new ResourceNotFoundException("Subject not found"));
-
-        activity.setTeacher(teacher);
-        activity.setClassRoom(classRoom);
-        activity.setSubject(subject);
-        activity.setDate(dto.getDate());
-        activity.setStartPeriod(dto.getStartPeriod());
-        activity.setEndPeriod(dto.getEndPeriod());
-        activity.setStartTime(dto.getStartTime());
-        activity.setEndTime(dto.getEndTime());
-        activity.setLearningMaterials(dto.getLearningMaterials());
-
-        activity = teachingActivityRepository.save(activity);
-        return mapToDTO(activity);
+    public TeachingActivity getActivityById(Long id) {
+        return teachingActivityRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Teaching activity not found"));
     }
 
     @Override
-    public void deleteTeachingActivity(Long id) {
-        TeachingActivity activity = teachingActivityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Teaching Activity not found"));
-        teachingActivityRepository.delete(activity);
-    }
-
-    private TeachingActivityDTO mapToDTO(TeachingActivity activity) {
-        TeachingActivityDTO dto = new TeachingActivityDTO();
-        dto.setId(activity.getId());
-        dto.setTeacherId(activity.getTeacher().getId());
-        dto.setClassRoomId(activity.getClassRoom().getId());
-        dto.setSubjectId(activity.getSubject().getId());
-        dto.setDate(activity.getDate());
-        dto.setStartPeriod(activity.getStartPeriod());
-        dto.setEndPeriod(activity.getEndPeriod());
-        dto.setStartTime(activity.getStartTime());
-        dto.setEndTime(activity.getEndTime());
-        dto.setLearningMaterials(activity.getLearningMaterials());
-        return dto;
+    public Page<TeachingActivity> getActivitiesByTeacher(Long teacherId, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+        return teachingActivityRepository.findByTeacherIdAndStartTimeBetween(
+                teacherId,
+                startDate.atStartOfDay(),
+                endDate.plusDays(1).atStartOfDay(),
+                pageable
+        );
     }
 
     @Override
-    public Long getMonthlyActivityCount(Long teacherId, int month, int year) {
-        return teachingActivityRepository.countByTeacherIdAndMonthAndYear(teacherId, month, year);
-    }
-
-    @Override
-    public List<TeachingActivityDTO> getTodayActivitiesByTeacher(Long teacherId) {
-        LocalDate today = LocalDate.now();
-        return teachingActivityRepository.findByTeacherIdAndDate(teacherId, today).stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public Page<TeachingActivity> getActivitiesByClassRoom(Long classRoomId, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+        return teachingActivityRepository.findByClassRoomIdAndStartTimeBetween(
+                classRoomId,
+                startDate.atStartOfDay(),
+                endDate.plusDays(1).atStartOfDay(),
+                pageable
+        );
     }
 }

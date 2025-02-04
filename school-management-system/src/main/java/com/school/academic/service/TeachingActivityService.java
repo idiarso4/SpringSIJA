@@ -1,15 +1,17 @@
 package com.school.academic.service;
 
 import com.school.academic.dto.TeachingActivityDTO;
+import com.school.academic.entity.TeachingActivity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public interface TeachingActivityService {
-    TeachingActivityDTO createTeachingActivity(TeachingActivityDTO dto);
-    TeachingActivityDTO getTeachingActivity(Long id);
-    List<TeachingActivityDTO> getAllTeachingActivities();
-    TeachingActivityDTO updateTeachingActivity(Long id, TeachingActivityDTO dto);
-    void deleteTeachingActivity(Long id);
-    Long getMonthlyActivityCount(Long teacherId, int month, int year);
-    List<TeachingActivityDTO> getTodayActivitiesByTeacher(Long teacherId);
+    TeachingActivity createActivity(TeachingActivityDTO activityDTO);
+    TeachingActivity updateActivity(Long id, TeachingActivityDTO activityDTO);
+    void deleteActivity(Long id);
+    TeachingActivity getActivityById(Long id);
+    Page<TeachingActivity> getActivitiesByTeacher(Long teacherId, LocalDate startDate, LocalDate endDate, Pageable pageable);
+    Page<TeachingActivity> getActivitiesByClassRoom(Long classRoomId, LocalDate startDate, LocalDate endDate, Pageable pageable);
 }

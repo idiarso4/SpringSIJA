@@ -7,106 +7,76 @@ import com.school.academic.entity.TeachingActivity;
 import com.school.academic.repository.AttendanceRepository;
 import com.school.academic.repository.TeachingActivityRepository;
 import com.school.academic.service.AttendanceService;
-import com.school.common.exception.ResourceNotFoundException;
 import com.school.masterdata.entity.Student;
 import com.school.masterdata.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AttendanceServiceImpl implements AttendanceService {
-
     private final AttendanceRepository attendanceRepository;
     private final TeachingActivityRepository teachingActivityRepository;
     private final StudentRepository studentRepository;
 
     @Override
-    public AttendanceDTO createAttendance(AttendanceDTO dto) {
-        TeachingActivity teachingActivity = teachingActivityRepository.findById(dto.getTeachingActivityId())
-                .orElseThrow(() -> new ResourceNotFoundException("Teaching Activity not found"));
+    @Transactional
+    public List<Attendance> createBulkAttendance(Long activityId, List<AttendanceDTO> attendanceDTOs) {
+        TeachingActivity activity = teachingActivityRepository.findById(activityId)
+                .orElseThrow(() -> new IllegalArgumentException("Teaching activity not found"));
 
-        Student student = studentRepository.findById(dto.getStudentId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+        List<Attendance> attendances = new ArrayList<>();
+        for (AttendanceDTO dto : attendanceDTOs) {
+            Student student = studentRepository.findById(dto.getStudentId())
+                    .orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
-        Attendance attendance = new Attendance();
-        attendance.setTeachingActivity(teachingActivity);
-        attendance.setStudent(student);
-        attendance.setStatus(AttendanceStatus.valueOf(dto.getStatus()));
-        attendance.setNotes(dto.getNotes());
+            Attendance attendance = new Attendance();
+            attendance.setTeachingActivity(activity);
+            attendance.setStudent(student);
+            attendance.setStatus(AttendanceStatus.valueOf(dto.getStatus()));
+            attendance.setNotes(dto.getNotes());
 
-        attendance = attendanceRepository.save(attendance);
-        return mapToDTO(attendance);
+            attendances.add(attendance);
+        }
+
+        return attendanceRepository.saveAll(attendances);
     }
 
     @Override
-    public AttendanceDTO getAttendance(Long id) {
-        Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found"));
-        return mapToDTO(attendance);
+    public Attendance getAttendanceById(Long id) {
+        return attendanceRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Attendance not found"));
     }
 
     @Override
-    public List<AttendanceDTO> getAllAttendances() {
-        return attendanceRepository.findAll().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public List<Attendance> getAttendancesByTeachingActivity(Long activityId) {
+        return attendanceRepository.findByTeachingActivityId(activityId);
     }
 
     @Override
-    public AttendanceDTO updateAttendance(Long id, AttendanceDTO dto) {
-        Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found"));
-
-        TeachingActivity teachingActivity = teachingActivityRepository.findById(dto.getTeachingActivityId())
-                .orElseThrow(() -> new ResourceNotFoundException("Teaching Activity not found"));
-
-        Student student = studentRepository.findById(dto.getStudentId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-
-        attendance.setTeachingActivity(teachingActivity);
-        attendance.setStudent(student);
-        attendance.setStatus(AttendanceStatus.valueOf(dto.getStatus()));
-        attendance.setNotes(dto.getNotes());
-
-        attendance = attendanceRepository.save(attendance);
-        return mapToDTO(attendance);
-    }
-
-    @Override
-    public void deleteAttendance(Long id) {
-        Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found"));
-        attendanceRepository.delete(attendance);
-    }
-
-    private AttendanceDTO mapToDTO(Attendance attendance) {
-        AttendanceDTO dto = new AttendanceDTO();
-        dto.setId(attendance.getId());
-        dto.setTeachingActivityId(attendance.getTeachingActivity().getId());
-        dto.setStudentId(attendance.getStudent().getId());
-        dto.setStatus(attendance.getStatus().toString());
-        dto.setNotes(attendance.getNotes());
-        return dto;
-    }
-
-    @Override
-    public byte[] generateAttendanceReport(Long teachingActivityId, LocalDate startDate, LocalDate endDate) {
-        TeachingActivity teachingActivity = teachingActivityRepository.findById(teachingActivityId)
-                .orElseThrow(() -> new ResourceNotFoundException("Teaching Activity not found"));
-
-        List<Attendance> attendances = attendanceRepository.findByTeachingActivityAndTeachingActivity_DateBetween(teachingActivity, startDate, endDate);
-        
-        // TODO: Implement report generation logic
-        return new byte[0]; // Placeholder implementation
+    public Page<Attendance> getStudentAttendance(Long studentId, LocalDate startDate, LocalDate endDate, Pageable pageable) {
+        return attendanceRepository.findByStudentIdAndTeachingActivityStartTimeBetween(
+                studentId,
+                startDate.atStartOfDay(),
+                endDate.plusDays(1).atStartOfDay(),
+                pageable
+        );
     }
 
     @Override
     public Long getMonthlyAbsenceCount(Long studentId, int month, int year) {
-        return attendanceRepository.countMonthlyAbsencesByStudent(studentId, AttendanceStatus.ABSENT, month, year);
+        return attendanceRepository.countByStudentIdAndStatusAndMonthAndYear(
+                studentId,
+                AttendanceStatus.ABSENT,
+                month,
+                year
+        );
     }
 }

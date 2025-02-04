@@ -1,44 +1,31 @@
 package com.school.security.dto;
 
-import com.school.security.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 public class RegisterRequest {
-
-    @NotBlank(message = "Username is required")
-    @Pattern(regexp = "^[a-zA-Z0-9._-]+$", message = "Username can only contain letters, numbers, dots, underscores, and hyphens")
+    @NotBlank
     private String username;
 
-    @NotBlank(message = "Password is required")
+    @NotBlank
     private String password;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
+    @NotBlank
+    @Email
     private String email;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank
     private String name;
 
-    @NotNull(message = "Role is required")
-    private Role role;
+    @NotBlank
+    private String role;
 
-    @NotBlank(message = "Identification number is required")
     private String identificationNumber;
-
-    @NotNull(message = "Birth date is required")
     private LocalDate birthDate;
-
-    @NotNull(message = "Entry year is required")
     private Integer entryYear;
-
-    private Long classRoomId;
 }

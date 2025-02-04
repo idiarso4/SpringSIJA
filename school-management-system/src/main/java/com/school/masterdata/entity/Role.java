@@ -1,6 +1,5 @@
 package com.school.masterdata.entity;
 
-import com.school.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,18 +8,19 @@ import lombok.Setter;
 @Table(name = "roles")
 @Getter
 @Setter
-public class RoleEntity extends BaseEntity {
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole role;
 
-    @Column(name = "description")
-    private String description;
-}
-
-public enum UserRole {
-    ADMIN,
-    TEACHER,
-    STUDENT,
-    PARENT
+    public enum UserRole {
+        ADMIN,
+        TEACHER,
+        STUDENT,
+        PARENT
+    }
 }
