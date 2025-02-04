@@ -1,0 +1,72 @@
+groups:
+  - name: attendance_alerts
+    rules:
+      # High CPU Usage Alert
+      - alert: HighCPUUsage
+        expr: process_cpu_usage > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High CPU usage detected
+          description: CPU usage is above 80% for 5 minutes
+
+      # High Memory Usage Alert
+      - alert: HighMemoryUsage
+        expr: sum(jvm_memory_used_bytes) / sum(jvm_memory_max_bytes) > 0.85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High memory usage detected
+          description: Memory usage is above 85% for 5 minutes
+
+      # High Error Rate Alert
+      - alert: HighErrorRate
+        expr: rate(http_server_requests_seconds_count{status=~"5.."}[5m]) > 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: High error rate detected
+          description: Application is returning 5xx errors
+
+      # API Response Time Alert
+      - alert: SlowAPIResponse
+        expr: http_server_requests_seconds_sum / http_server_requests_seconds_count > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Slow API response detected
+          description: API response time is above 2 seconds
+
+      # Database Connection Pool Alert
+      - alert: HighDBConnections
+        expr: hikaricp_connections_active / hikaricp_connections_max > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High database connection usage
+          description: More than 80% of database connections are in use
+
+      # Failed Login Attempts Alert
+      - alert: HighFailedLogins
+        expr: rate(security_authentication_failures_total[5m]) > 10
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: High number of failed logins
+          description: More than 10 failed login attempts per minute
+
+      # Disk Space Alert
+      - alert: LowDiskSpace
+        expr: node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} < 0.1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: Low disk space
+          description: Less than 10% disk space remaining

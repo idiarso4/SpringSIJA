@@ -1,0 +1,9 @@
+com\school\academic\entity\TeachingActivity.class
+com\school\common\entity\BaseEntity.class
+com\school\masterdata\entity\User.class
+com\school\masterdata\entity\ClassRoom.class
+com\school\common\exception\ErrorResponse.class
+com\school\common\exception\ValidationErrorResponse.class
+com\school\common\service\NotificationService.class
+com\school\masterdata\entity\Teacher.class
+com\school\masterdata\entity\Subject.class
