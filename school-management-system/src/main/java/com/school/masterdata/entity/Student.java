@@ -2,15 +2,15 @@ package com.school.masterdata.entity;
 
 import com.school.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "students")
-@EqualsAndHashCode(callSuper = true)
 public class Student extends BaseEntity {
 
     @OneToOne
@@ -29,5 +29,4 @@ public class Student extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "class_room_id")
     private ClassRoom classRoom;
-
 }

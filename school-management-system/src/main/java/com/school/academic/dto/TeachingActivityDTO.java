@@ -1,65 +1,116 @@
 package com.school.academic.dto;
 
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
 
-import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Data
 public class TeachingActivityDTO {
     private Long id;
-    
+
     @NotNull(message = "Teacher ID is required")
     private Long teacherId;
-    
+
     @NotNull(message = "Class Room ID is required")
     private Long classRoomId;
-    
+
     @NotNull(message = "Subject ID is required")
     private Long subjectId;
-    
-    @NotBlank(message = "Topic is required")
-    private String topic;
-    
-    @NotBlank(message = "Description is required")
-    private String description;
-    
+
     @NotNull(message = "Date is required")
     private LocalDate date;
-    
-    @NotNull(message = "Start period is required")
-    @Min(value = 1, message = "Start period must be at least 1")
+
+    @NotNull(message = "Start Period is required")
     private Integer startPeriod;
-    
-    @NotNull(message = "End period is required")
-    @Min(value = 1, message = "End period must be at least 1")
+
+    @NotNull(message = "End Period is required")
     private Integer endPeriod;
-    
-    @NotNull(message = "Start time is required")
+
+    @NotNull(message = "Start Time is required")
     private LocalTime startTime;
-    
-    @NotNull(message = "End time is required")
+
+    @NotNull(message = "End Time is required")
     private LocalTime endTime;
-    
-    @Size(max = 500, message = "Learning materials must not exceed 500 characters")
+
     private String learningMaterials;
-    
-    @Size(max = 50, message = "Teaching media must not exceed 50 characters")
-    private String teachingMedia;
-    
-    @Size(max = 500, message = "Notes must not exceed 500 characters")
-    private String notes;
-    
-    // Teacher details
-    private String teacherName;
-    private String teacherNumber;
-    
-    // Class details
-    private String className;
-    private Integer grade;
-    
-    // Subject details
-    private String subjectName;
-    private String subjectCode;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    public Long getClassRoomId() {
+        return classRoomId;
+    }
+
+    public void setClassRoomId(Long classRoomId) {
+        this.classRoomId = classRoomId;
+    }
+
+    public Long getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Integer getStartPeriod() {
+        return startPeriod;
+    }
+
+    public void setStartPeriod(Integer startPeriod) {
+        this.startPeriod = startPeriod;
+    }
+
+    public Integer getEndPeriod() {
+        return endPeriod;
+    }
+
+    public void setEndPeriod(Integer endPeriod) {
+        this.endPeriod = endPeriod;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getLearningMaterials() {
+        return learningMaterials;
+    }
+
+    public void setLearningMaterials(String learningMaterials) {
+        this.learningMaterials = learningMaterials;
+    }
 }

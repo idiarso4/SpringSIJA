@@ -1,22 +1,20 @@
 package com.school.common.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class ErrorResponse {
     private int status;
     private String message;
-    private LocalDateTime timestamp;
+    private long timestamp;
 
     public ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = System.currentTimeMillis();
     }
 }

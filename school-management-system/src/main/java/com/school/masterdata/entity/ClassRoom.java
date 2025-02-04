@@ -2,12 +2,12 @@ package com.school.masterdata.entity;
 
 import com.school.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "class_rooms")
 public class ClassRoom extends BaseEntity {
 

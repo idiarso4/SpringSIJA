@@ -1,15 +1,15 @@
 package com.school.security.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import com.school.masterdata.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Set;
-
-@Data
-@Builder
+@Getter
+@Setter
 public class AuthResponse {
     private String token;
     private String username;
-    private String name;
-    private Set<String> roles;
+    private String email;
+    private String fullName;
+    private User.Role role;
 }

@@ -4,12 +4,12 @@ import com.school.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "subjects")
 public class Subject extends BaseEntity {
 

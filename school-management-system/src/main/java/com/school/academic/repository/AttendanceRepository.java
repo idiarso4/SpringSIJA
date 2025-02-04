@@ -38,4 +38,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
            "AND EXTRACT(YEAR FROM a.teachingActivity.date) = :year " +
            "AND a.deleted = false")
     Long countMonthlyAbsencesByStudent(Long studentId, int month, int year);
+    
+    List<Attendance> findByTeachingActivityAndTeachingActivity_DateBetween(TeachingActivity teachingActivity, LocalDate startDate, LocalDate endDate);
 }

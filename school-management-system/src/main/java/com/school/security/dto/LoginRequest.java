@@ -1,9 +1,11 @@
 package com.school.security.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class LoginRequest {
 
     @NotBlank(message = "Username is required")

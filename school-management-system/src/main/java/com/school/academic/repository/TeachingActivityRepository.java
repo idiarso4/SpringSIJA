@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -38,4 +39,11 @@ public interface TeachingActivityRepository extends JpaRepository<TeachingActivi
            "AND EXTRACT(YEAR FROM ta.date) = :year " +
            "AND ta.deleted = false")
     Long countMonthlyActivitiesByTeacher(Long teacherId, int month, int year);
+    
+    @Query("SELECT COUNT(t) FROM TeachingActivity t WHERE t.teacher.id = :teacherId " +
+           "AND EXTRACT(MONTH FROM t.date) = :month " +
+           "AND EXTRACT(YEAR FROM t.date) = :year")
+    Long countByTeacherIdAndMonthAndYear(@Param("teacherId") Long teacherId, @Param("month") int month, @Param("year") int year);
+    
+    List<TeachingActivity> findByTeacherIdAndDate(Long teacherId, LocalDate date);
 }

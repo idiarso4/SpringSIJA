@@ -23,29 +23,20 @@ public interface AssessmentRepository extends JpaRepository<Assessment, Long> {
         Assessment.AssessmentType assessmentType
     );
     
-    @Query("SELECT a FROM Assessment a WHERE a.student.id = :studentId " +
-           "AND a.subject.id = :subjectId " +
-           "AND a.assessmentType = :type " +
-           "AND a.attempt = (" +
-           "    SELECT MAX(a2.attempt) FROM Assessment a2 " +
-           "    WHERE a2.student.id = :studentId " +
-           "    AND a2.subject.id = :subjectId " +
-           "    AND a2.assessmentType = :type" +
-           ")")
-    Optional<Assessment> findLatestAssessment(
-        Long studentId,
-        Long subjectId,
-        Assessment.AssessmentType type
+    Optional<Assessment> findFirstByStudentAndSubjectAndAssessmentTypeOrderByDateDesc(
+        Student student,
+        Subject subject,
+        Assessment.AssessmentType assessmentType
     );
     
     @Query("SELECT AVG(a.score) FROM Assessment a " +
-           "WHERE a.student.id = :studentId " +
-           "AND a.subject.id = :subjectId " +
+           "WHERE a.student = :student " +
+           "AND a.subject = :subject " +
            "AND a.assessmentType = :type " +
            "AND a.deleted = false")
     Double calculateAverageScore(
-        Long studentId,
-        Long subjectId,
+        Student student,
+        Subject subject,
         Assessment.AssessmentType type
     );
 }
